@@ -12,27 +12,27 @@
      + [GET /v1/{chainID}/quote](#v1/quote)
 
 ## <a name="dex_api"></a> DEX Aggregator API
-- 6 supported blockchains, 3600 tokens 
-- Full cycle of preparing a transaction for tokens exchange in the network 
+- 6 supported blockchains, 3600 tokens.
+- Full cycle of preparing a transaction for tokens exchange in the network.
 
 ## <a name="get_started"></a>Get Started
-1. URL for API – https://api.yetanotherdefi.com
-3. Without an API access key, a number of requests per second is limited, suitable for testing and development 
-4. To obtain the key, contact [partners@yetanotherdefi.com](mailto:partners@yetanotherdefi.com "partners@yetanotherdefi.com")
-5. The given key must be added to the **header** of each request, parameter {`"X-API-Key"`: `"<key>"`} 
+1. URL for API – https://api.yetanotherdefi.com.
+3. Without an API access key, a number of requests per second is limited, suitable for testing and development.
+4. To obtain the key, contact [partners@yetanotherdefi.com](mailto:partners@yetanotherdefi.com "partners@yetanotherdefi.com").
+5. The given key must be added to the **header** of each request, parameter {`"X-API-Key"`: `"<key>"`}.
 
 ## <a name="flow"></a>Flow Exmple
 API Use Case
 1. API - provides a list of supported blockchains upon request `GET v1/platforms`.
-2. GUI - the user selects a network the exchange is made within. For example, ethereum, ChainID=1.
+2. GUI - the user selects a network the exchange is made within. For example, Ethereum, ChainID=1.
 3. API - provides a list of blockchain tokens upon request `GET v1/{ChainID}/tokens` (in our example, `GET v1/1/tokens`).
-4. API (optional) – provides calculated Gas Price values ​​in Gwei (nAVAX for Avalanche) for fast, medium, low transaction time `GET /v1/{chainID}/gasprices` (in the example `GET /v1/1/gasprices`).
+4. API (optional) – provides calculated gas price values ​​in GWEI (nAVAX for Avalanche) for fast, medium, low transaction time `GET /v1/{chainID}/gasprices` (in the example `GET /v1/1/gasprices`).
 5. GUI - the user selects the exchange tokens and the sale amount. For example, 1000 USDT to WBTC. 
 6. GUI - the user sets the slippage tolerance value in percentage. The recommended value is 1%. 
-7. GUI (optional) - the user selects the Gas Price value from pt 4 
+7. GUI (optional) - the user selects the gas price value from pt 4.
 8. API - by endpoint `GET /v1/{chainID}/price` (`GET /v1/1/price`) provides the number of the tokens for purchase (0.05 WBTC). 
 9. GUI - the user connects the wallet.
-10. API - by endpoint `GET v1/{chainID}/transaction/allowance` (GET `/v1/1/transaction/allowance`) returns to the amount of tokens that the exchange smart contract has access to (not required for native coins).
+10. API - by endpoint `GET v1/{chainID}/transaction/allowance` (GET `/v1/1/transaction/allowance`) returns the amount of tokens that the exchange smart contract has access to (not required for native coins).
 11. GUI - if the value of the sale is greater than the value from pt 10, the user is prompted to provide access for the tokens exchange (otherwise the exchange transaction will not be processed).
 12. API - by endpoint `GET v1/{chainID}/transaction/approve` returns the input parameters (calldata) for a transaction to provide access to tokens, and the address of the contract where the transaction should be sent to. 
 13. GUI - generates an unsigned transaction based on the data from pt 12 and sends it to the user's connected wallet. 
@@ -117,7 +117,7 @@ URL + `/v1/1/tokens`
 ```
 
 ### <a name="v1/gasprices"></a>GET /v1/{chainID}/gasprices
-Provides calculated Gas Price values in GweiI (nAVAX for Avalanche). 
+Provides calculated gas price values in GWEI (nAVAX for Avalanche). 
 #### Input Parameters 
 - **chainId** `required` – the blockchain ID for which the gas price is requested.
 #### Response Options 
@@ -144,7 +144,7 @@ Returns best exchange offer, no calldata for transaction.
 * **toTokenAddress** `required` – smart contract address of the purchase token. 
 * **amount** `required` – the amount of sale tokens in decimals of the token (can be taken from the method `/tokens`).
 * **slippage** `required` – the amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert.
-* **gasPrice** – value of the gas price for the transaction in WEI (1 gwei = 1000000000 wei), default value is the value high from the method `/gasprices`.
+* **gasPrice** – value of the gas price for the transaction in WEI (1 GWEI = 1000000000 WEI), default value is the value high from the method `/gasprices`.
 * **feeRecipient** - wallet address for receiving fees. The commission is paid from the purchase token. 
 * **buyTokenPercentageFee** - percentage of commission from the amount of purchase tokens, charged in favor of feeRecipient (10 = 1%, maximum value - 500). 
 #### Response Options 
@@ -203,7 +203,7 @@ Generates transaction input parameters to provide access to the user's tokens fo
 * **chainID** `required` – ID of the blockchain the token is located on (supported networks - `/v1/platforms`).
 * **tokenAddress** `required` – address of the smart contract of the token for which the access request is generated.
 * **amount** - the amount of user tokens to which access is granted. By default - infinite number.
-* **gasPrice** – value of gas price for making a transaction in WEI (nAVAX for Avalanche) (1 gwei = 1000000000 wei), default value – the value high from the method `/gasprices`.
+* **gasPrice** – value of gas price for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value – the value high from the method `/gasprices`.
 #### Response Options 
 * **calldata** - one of the input parameters for processing a transaction providing access to tokens.
 * **estimate_gas** - the estimated amount of gas that will be used during the transaction.
@@ -230,7 +230,7 @@ Returns the best exchange offer and input parameters for the transaction
 * **toTokenAddress** `required` – smart contract address of the purchase token.
 * **amount** `required` – the amount of sale tokens in decimals of the token (can be taken from the method `/tokens`) 
 * **slippage** `required` – the amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert.
-* **gasPrice** – gas price value for making a transaction in WEI (nAVAX for Avalanche) (1 gwei = 1000000000 wei), default value is the value high from `/gasprices`.
+* **gasPrice** – gas price value for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value is the value high from `/gasprices`.
 * **feeRecipient** - wallet address for receiving fees. The commission is paid from the purchase token. 
 * **buyTokenPercentageFee** - percentage of commission from the amount of purchase tokens, is taken in favor of feeRecipient. (10 = 1%, maximum value is 500).
 #### Response Options 
