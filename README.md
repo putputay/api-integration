@@ -22,11 +22,11 @@
 5. The given key must be added to the **header** of each request, parameter {`"X-API-Key"`: `"<key>"`}.
 
 ## <a name="flow"></a>Flow Exmple
-API Use Case
+API Use Case:
 1. API - provides a list of supported blockchains upon request `GET v1/platforms`.
 2. GUI - the user selects a network the exchange is made within. For example, Ethereum, ChainID=1.
 3. API - provides a list of blockchain tokens upon request `GET v1/{ChainID}/tokens` (in our example, `GET v1/1/tokens`).
-4. API (optional) – provides calculated gas price values ​​in GWEI (nAVAX for Avalanche) for fast, medium, low transaction time `GET /v1/{chainID}/gasprices` (in the example `GET /v1/1/gasprices`).
+4. API (optional) – provides calculated gas price values in GWEI (nAVAX for Avalanche) for fast, medium, low transaction time `GET /v1/{chainID}/gasprices` (in the example `GET /v1/1/gasprices`).
 5. GUI - the user selects the exchange tokens and the sale amount. For example, 1000 USDT to WBTC. 
 6. GUI - the user sets the slippage tolerance value in percentage. The recommended value is 1%. 
 7. GUI (optional) - the user selects the gas price value from pt 4.
@@ -223,7 +223,7 @@ URL + `/v1/1/transaction/approve?tokenAddress=0xdAC17F958D2ee523a2206206994597C1
 
 
 ### <a name="v1/quote"></a>GET /v1/{chainID}/quote
-Returns the best exchange offer and input parameters for the transaction 
+Returns the best exchange offer and input parameters for the transaction.
 #### Input Parameters 
 * **chainID** `required` – ID of the blockchain tokens must be exchanged on (supported networks - `v1/platforms`).
 * **fromTokenAddress** `required` – smart contract address of the sale token.
