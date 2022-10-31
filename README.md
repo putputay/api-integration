@@ -21,26 +21,26 @@
 4. To obtain the key, contact [partners@yetanotherdefi.com](mailto:partners@yetanotherdefi.com "partners@yetanotherdefi.com").
 5. The given key must be added to the **header** of each request, parameter {`"X-API-Key"`: `"<key>"`}.
 
-## <a name="flow"></a>Flow Exmple
-API Use Case:
-1. API - provides a list of supported blockchains upon request `GET v1/platforms`.
-2. GUI - the user selects a network the exchange is made within. For example, Ethereum, ChainID=1.
-3. API - provides a list of blockchain tokens upon request `GET v1/{ChainID}/tokens` (in our example, `GET v1/1/tokens`).
-4. API (optional) – provides calculated gas price values in GWEI (nAVAX for Avalanche) for fast, medium, low transaction time `GET /v1/{chainID}/gasprices` (in the example `GET /v1/1/gasprices`).
-5. GUI - the user selects the exchange tokens and the sale amount. For example, 1000 USDT to WBTC. 
-6. GUI - the user sets the slippage tolerance value in percentage. The recommended value is 1%. 
-7. GUI (optional) - the user selects the gas price value from pt 4.
-8. API - by endpoint `GET /v1/{chainID}/price` (`GET /v1/1/price`) provides the number of the tokens for purchase (0.05 WBTC). 
-9. GUI - the user connects the wallet.
-10. API - by endpoint `GET v1/{chainID}/transaction/allowance` (GET `/v1/1/transaction/allowance`) returns the amount of tokens that the exchange smart contract has access to (not required for native coins).
-11. GUI - if the value of the sale is greater than the value from pt 10, the user is prompted to provide access for the tokens exchange (otherwise the exchange transaction will not be processed).
-12. API - by endpoint `GET v1/{chainID}/transaction/approve` returns the input parameters (calldata) for a transaction to provide access to tokens, and the address of the contract where the transaction should be sent to. 
-13. GUI - generates an unsigned transaction based on the data from pt 12 and sends it to the user's connected wallet. 
-14. WALLET - the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain.
-15. GUI - after successful confirmation of the transaction from pt 14, the user is offered a button to exchange the selected tokens.
-16. API - by endpoint `GET /v1/{chainID}/quote` (`GET /v1/1/quote`) provides the number of the tokens purchased (0.05 WBTC), transaction input parameters.
-17. GUI - generates an unsigned transaction based on the data from pt 16 and sends it to the user's connected wallet. 
-18. WALLET - the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain. 
+## <a name="flow"></a>Flow Example
+API Use Case
+1. API — provides a list of supported blockchains upon request `GET v1/platforms`.
+2. GUI — the user selects a network the exchange is made within. For example, Ethereum, ChainID=1.
+3. API — provides a list of blockchain tokens upon request `GET v1/{ChainID}/tokens` (in our example, `GET v1/1/tokens`).
+4. API (optional) – provides calculated gas price values in GWEI (nAVAX for Avalanche) for fast, medium, low transaction time GET /v1/{chainID}/gasprices (in the example GET /v1/1/gasprices).
+5. GUI — the user selects the exchange tokens and the sale amount. For example, 1000 USDT to WBTC. 
+6. GUI — the user sets the slippage tolerance value in percentage. The recommended value is 1%. 
+7. GUI (optional) — the user selects the gas price value from pt 4.
+8. API — endpoint GET /v1/{chainID}/price (GET /v1/1/price) provides the number of the tokens which the user will get by for purchase (0.05 WBTC). 
+9. GUI — the user connects the wallet.
+10. API — endpoint `GET v1/{chainID}/transaction/allowance` (GET `/v1/1/transaction/allowance`) returns the amount of tokens that the exchange smart contract has access to (not required for native coins).
+11. GUI — if the value of the sale is greater than the value from pt 10, the user is prompted to provide access for the tokens exchange (otherwise the exchange transaction will not be processed).
+12. API — endpoint `GET v1/{chainID}/transaction/approve` returns the input parameters (calldata) for a transaction to provide access to tokens, and the address of the contract where the transaction should be sent to. 
+13. GUI — generates an unsigned transaction based on the data from pt 12 and sends it to the user's connected wallet. 
+14. WALLET — the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain.
+15. GUI — after successful confirmation of the transaction from pt 14, the user is offered a button to exchange the selected tokens.
+16. API — by endpoint `GET /v1/{chainID}/quote` (`GET /v1/1/quote`) provides the number of the tokens purchased (0.05 WBTC), transaction input parameters.
+17. GUI — generates an unsigned transaction based on the data from pt 16 and sends it to the user's connected wallet. 
+18. WALLET — the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain. 
 
 ## <a name="endpoint"></a>Endpoint Description
 
@@ -49,10 +49,15 @@ Provides a list of supported blockchains.
 #### Input Parameters
 None 
 #### Response Options
-- **platforms** - an array of supported networks.
-    - **chainId** - the blockchain network ID.
-    - **shortname** - the short name of the blockchain network.
-    - **name** - the full name of the blockchain network.
+
+| Name          | Data Type | Description|
+|---------------|-----------|-------------------------------------------|
+| **platforms** | `array`   | An array of supported networks.           |
+| **chainId**   | `int`     | The blockchain network ID.                |
+| **shortname** | `str`     | The short name of the blockchain network. |
+| **name**      | `str`     | The full name of the blockchain network.  |
+#### Request Example 
+`https://api.yetanotherdefi.com/v1/platforms`
 #### Response Example
 ```javascript
 {
@@ -79,17 +84,26 @@ None
 ### <a name="v1/tokens"></a>GET v1/{ChainID}/tokens
 Provides a list of tokens for exchange on blockchains.
 #### Input Parameters 
-- **chainId** `required` – the blockchain network ID that requires a list of tokens (supported networks - v1/platforms).
+| Name        | Required | Description                                                                                   |
+|-------------|:--------:|-----------------------------------------------------------------------------------------------|
+| **chainId** | +        | The blockchain network ID that requires a list of tokens (supported networks - v1/platforms). |
+
+
+
 #### Response Options 
-* **tokens** - an array of supported tokens.
-    * **chainId** - the blockchain network ID. 
-    * **name** - the full name of the token.
-    * **address** – the token smart contract address.
-    * **decimals** – the number of decimals used to get its user representation. For example, if decimals equals 2, a balance of 505 tokens should be displayed to a user as 5,05 (505 / 10 ** 2).
-    * **logoURI** - the link to the token logo.
-    * **symbol** – the abbreviated name of the token.
+
+| Name         | Data Type | Description                                                                            |
+|--------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **tokens**   | `array`   | An array of supported tokens.                                                                                                                                                 |
+| **chainId**  | `int`     | The blockchain network ID. |
+| **name**     | `str`     | The full name of the token.                                                                                                                                                   |
+| **address**  | `str`     | The token smart contract address.                                                                                                                                             |
+| **decimals** | `int`     | The number of decimals used to get its user representation. For example, if decimals equals 2, a balance of 505 tokens should be displayed to a user as 5,05 (505 / 10 ** 2). |
+| **logoURI**  | `str`     | The link to the token logo.                                                                                                                                                   |
+| **symbol**   | `str`     | The abbreviated name of the token.                                                                                                                                            |
+
 #### Request Example 
-URL + `/v1/1/tokens`
+`https://api.yetanotherdefi.com/v1/1/tokens`
 #### Response Example 
 ```javascript
 {
@@ -119,13 +133,25 @@ URL + `/v1/1/tokens`
 ### <a name="v1/gasprices"></a>GET /v1/{chainID}/gasprices
 Provides calculated gas price values in GWEI (nAVAX for Avalanche). 
 #### Input Parameters 
-- **chainId** `required` – the blockchain ID for which the gas price is requested.
+
+| Name        | Required | Description                                             |
+|-------------|:----------:|---------------------------------------------------------|
+| **chainId** | +        | The blockchain ID for which the gas price is requested. |
+
+
+
+
 #### Response Options 
-* **high** - the gas price at which the transaction is most likely to be accepted in the next block.
-* **medium** - the gas price at which the transaction is most likely to be accepted in the next 2-3 blocks.
-* **low** - the gas price at which the transaction is most likely to be accepted not earlier than after block 5. There is a risk of a long transaction confirmation.
+ | Name       | Data Type | Description                                                                                                                                              |
+|------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **high**   | `str`     |The gas price at which the transaction is most likely to be accepted in the next block.                                                                  |
+| **medium** | `str`     | The gas price at which the transaction is most likely to be accepted in the next 2-3 blocks.                                                             |
+| **low**    | `str`     | The gas price at which the transaction is most likely to be accepted not earlier than after block 5. There is a risk of a long transaction confirmation. |
+
+
+
 #### Request Example 
-URL + `/v1/1/gasprices`
+`https://api.yetanotherdefi.com/v1/1/gasprices`
 #### Response Example 
 ```javascript
 {
@@ -139,24 +165,31 @@ URL + `/v1/1/gasprices`
 ### <a name="v1/price"></a>GET /v1/{chainID}/price
 Returns best exchange offer, no calldata for transaction.
 #### Input Parameters 
-* **chainID** `required` – the blockchain ID in which tokens are being changed.
-* **fromTokenAddress** `required` – smart contract address of the sale token.
-* **toTokenAddress** `required` – smart contract address of the purchase token. 
-* **amount** `required` – the amount of sale tokens in decimals of the token (can be taken from the method `/tokens`).
-* **slippage** `required` – the amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert.
-* **gasPrice** – value of the gas price for the transaction in WEI (1 GWEI = 1000000000 WEI), default value is the value high from the method `/gasprices`.
-* **feeRecipient** - wallet address for receiving fees. The commission is paid from the purchase token. 
-* **buyTokenPercentageFee** - percentage of commission from the amount of purchase tokens, charged in favor of feeRecipient (10 = 1%, maximum value - 500). 
+ | Name                      | Required | Description                                                                                                                                                                       |
+|---------------------------|:--------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **chainID**               | +        | ID of the blockchain tokens must be exchanged on (supported networks - `v1/platforms`).                                                                                           |
+| **fromTokenAddress**      | +        | Smart contract address of the sale token.                                                                                                                                         |
+| **toTokenAddress**        | +        | Smart contract address of the purchase token.                                                                                                                                     |
+| **amount**                | +        | The amount of sale tokens in decimals of the token (can be taken from the method `/tokens`).                                                                                      |
+| **slippage**              | +        | The amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert. |
+| **gasPrice**              | -        | Gas price value for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value is the value high from `/gasprices`.                               |
+| **feeRecipient**          | -        | Wallet address for receiving fees. The commission is paid from the purchase token.                                                                                                |
+| **buyTokenPercentageFee** | -        | Percentage of commission from the amount of purchase tokens, is taken in favor of feeRecipient. (10 = 1%, maximum value is 500).                                                  | 
 #### Response Options 
-* **amount_out_total** - the amount of purchase tokens in decimals of the token.
-* **estimate_gas_total** - the estimated amount of gas that will be consumed when executing the transaction.
-* **gas_price** - gas price value for a transaction in WEI (nAVAX for Avalanche).
-* **fee_recipient_amount** - the amount of purchase tokens in decimals of the token, which will be deducted in favor of feeRecipient. The value will be 0 if the feeRecipient and buyTokenPercentageFee fields are not specified.
-* **token_in** – smart contract address of the sale token.
-* **token_out** - smart contract address of the purchase token.
-* **routes** - an array of DEXs the transaction will be carried out through.
+| Name                     | Data type| Description|
+|--------------------------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **amount_out_total**     | `str`       | The amount of purchase tokens in decimals of the token.                                                                                                                                       |
+| **estimate_gas_total**   | `str`       | The estimated amount of gas that will be used during the transaction.                                                                                                                         |
+| **gas_price**            | `str`       | Gas price value for a transaction in WEI (nAVAX for Avalanche).                                                                                                                               |
+| **fee_recipient_amount** | `str`       | The amount of purchase tokens in decimals of the token, which will be taken in favor of feeRecipient. The value will be 0 if feeRecipient and buyTokenPercentageFee fields are not specified. |
+| **token_in**             | `str`       | Smart contract address of the sale token.                                                                                                                                                     |
+| **token_out**            | `str`       | Smart contract address of the purchase token.                                                                                                                                                 |
+| **routes**               | `array`     | An array of DEXs the transaction will be carried out through.                                                                                                                                 |
+|**protocol_name**|`str`| DEX name the transaction will be carried out through.
+|**percent**|`int`| The percent of amount will be swapped on the current DEX.
+
 #### Request Example 
-URL + `/v1/1/price?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
+`https://api.yetanotherdefi.com/v1/1/price?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
 #### Response Example 
 ```javascript
 {
@@ -169,8 +202,6 @@ URL + `/v1/1/price?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&t
   "routes": [
     {
       "protocol_name": "DODO_V2",
-      "amount_in": "1500327097388245032000",
-      "amount_out": "1500000000",
       "percent": 100,
       "pools": null
     }
@@ -182,13 +213,18 @@ URL + `/v1/1/price?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&t
 ### <a name="v1/allowance"></a>GET v1/{chainID}/transaction/allowance
 Checks how many user’s tokens the exchange smart contract has access to.
 #### Input Parameters 
-* **chainID** `required` – the ID of the blockchain the token is located on (supported networks - `/v1/platforms`).
-* **tokenAddress** `required` – smart contract address of the token for which access is being checked.
-* **walletAddress** `required` – wallet of the user for which access is being checked.
+| Name              | Required | Description                                                                              |
+|-------------------|:----------:|------------------------------------------------------------------------------------------|
+| **chainID**       | +        | The ID of the blockchain the token is located on (supported networks - `/v1/platforms`). |
+|  **tokenAddress** | +        | Smart contract address of the token for which access is being checked.                   |
+| **walletAddress** | +        | Wallet of the user for which access is being checked.                                    |                                                                                                                                                      |
+
 #### Response Options 
-* **remaining** - the number of tokens in decimals of the token the smart contract has access to.
+| Name          | Data Type | Description                                                                     |
+|---------------|-----------|---------------------------------------------------------------------------------|
+| **remaining** | `str`     | The number of tokens in decimals of the token the smart contract has access to. |
 #### Request Example 
-URL + `/v1/1/transaction/allowance?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&walletAddress=0x58f58219e2d2598588c1b457bb6da65c34d99310`
+`https://api.yetanotherdefi.com/v1/1/transaction/allowance?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&walletAddress=0x58f58219e2d2598588c1b457bb6da65c34d99310`
 #### Response Example 
 ```javascript
 {
@@ -200,17 +236,27 @@ URL + `/v1/1/transaction/allowance?tokenAddress=0xdAC17F958D2ee523a2206206994597
 ### <a name="v1/approve"></a>GET v1/{chainID}/transaction/approve
 Generates transaction input parameters to provide access to the user's tokens for the exchange smart contract. 
 #### Input Parameters 
-* **chainID** `required` – ID of the blockchain the token is located on (supported networks - `/v1/platforms`).
-* **tokenAddress** `required` – address of the smart contract of the token for which the access request is generated.
-* **amount** - the amount of user tokens to which access is granted. By default - infinite number.
-* **gasPrice** – value of gas price for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value – the value high from the method `/gasprices`.
+| Name             | Required | Description
+|------------------|:----------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **chainID**      | +        | ID of the blockchain the token is located on (supported networks - `/v1/platforms`).                                                                             |
+| **tokenAddress** | +        | Address of the smart contract of the token for which the access request is generated.                                                                            |
+| **amount**       | -        | The amount of user tokens to which access is granted. By default - infinite number.                                                                              |
+| **gasPrice**     | -        | Value of gas price for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value – the value high from the method `/gasprices`. |
+
+
+
 #### Response Options 
-* **calldata** - one of the input parameters for processing a transaction providing access to tokens.
-* **estimate_gas** - the estimated amount of gas that will be used during the transaction.
-* **gas_price** - gas price value for a transaction in WEI.
-* **to** – address of the smart contract the transaction should be sent to.
+| Name             | Data Type | Description                                                                          |
+|------------------|-----------|--------------------------------------------------------------------------------------|
+| **calldata**     | `str`     | one of the input parameters for processing a transaction providing access to tokens. |
+| **estimate_gas** | `str`     | the estimated amount of gas that will be used during the transaction.                |
+| **gas_price**    | `str`     | gas price value for a transaction in WEI.                                            |
+| **to**           | `str`     | address of the smart contract the transaction should be sent to.                     |
+
+
+
 #### Request Example 
-URL + `/v1/1/transaction/approve?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&amount=100000000000&gasPrice=100000000000`
+`https://api.yetanotherdefi.com/v1/1/transaction/approve?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&amount=100000000000&gasPrice=100000000000`
 #### Response Example 
 ```javascript
 {
@@ -225,26 +271,41 @@ URL + `/v1/1/transaction/approve?tokenAddress=0xdAC17F958D2ee523a2206206994597C1
 ### <a name="v1/quote"></a>GET /v1/{chainID}/quote
 Returns the best exchange offer and input parameters for the transaction.
 #### Input Parameters 
-* **chainID** `required` – ID of the blockchain tokens must be exchanged on (supported networks - `v1/platforms`).
-* **fromTokenAddress** `required` – smart contract address of the sale token.
-* **toTokenAddress** `required` – smart contract address of the purchase token.
-* **amount** `required` – the amount of sale tokens in decimals of the token (can be taken from the method `/tokens`) 
-* **slippage** `required` – the amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert.
-* **gasPrice** – gas price value for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value is the value high from `/gasprices`.
-* **feeRecipient** - wallet address for receiving fees. The commission is paid from the purchase token. 
-* **buyTokenPercentageFee** - percentage of commission from the amount of purchase tokens, is taken in favor of feeRecipient. (10 = 1%, maximum value is 500).
+ | Name                      | Required | Description                                                                                                                                                                       |
+|---------------------------|:--------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **chainID**               | +        | ID of the blockchain tokens must be exchanged on (supported networks - `v1/platforms`).                                                                                           |
+| **fromTokenAddress**      | +        | Smart contract address of the sale token.                                                                                                                                         |
+| **toTokenAddress**        | +        | Smart contract address of the purchase token.                                                                                                                                     |
+| **amount**                | +        | The amount of sale tokens in decimals of the token (can be taken from the method `/tokens`).                                                                                      |
+| **slippage**              | +        | The amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert. |
+| **gasPrice**              | -        | Gas price value for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value is the value high from `/gasprices`.                               |
+| **feeRecipient**          | -        | Wallet address for receiving fees. The commission is paid from the purchase token.                                                                                                |
+| **buyTokenPercentageFee** | -        | Percentage of commission from the amount of purchase tokens, is taken in favor of feeRecipient. (10 = 1%, maximum value is 500).                                                  |
+
+
+
 #### Response Options 
-* **amount_out_total** - the amount of purchase tokens in decimals of the token.
-* **estimate_gas_total** - the estimated amount of gas that will be used during the transaction.
-* **gas_price** - gas price value for a transaction in WEI (nAVAX for Avalanche).
-* **fee_recipient_amount** - the amount of purchase tokens in decimals of the token, which will be taken in favor of feeRecipient. The value will be 0 if feeRecipient and buyTokenPercentageFee fields are not specified.
-* **token_in** – smart contract address of the sale token.
-* **token_out** - smart contract address of the purchase token.
-* **routes** - an array of DEXs the transaction will be carried out through.
-* **calldata** - one of the input parameters for processing a transaction for tokens exchange.
-* **to** – smart contract address where input parameters should be sent to.
+| Name                     | Data type| Description|
+|--------------------------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **amount_out_total**     | `str`       | The amount of purchase tokens in decimals of the token.                                                                                                                                       |
+| **estimate_gas_total**   | `str`       | The estimated amount of gas that will be used during the transaction.                                                                                                                         |
+| **gas_price**            | `str`       | Gas price value for a transaction in WEI (nAVAX for Avalanche).                                                                                                                               |
+| **fee_recipient_amount** | `str`       | The amount of purchase tokens in decimals of the token, which will be taken in favor of feeRecipient. The value will be 0 if feeRecipient and buyTokenPercentageFee fields are not specified. |
+| **token_in**             | `str`       | Smart contract address of the sale token.                                                                                                                                                     |
+| **token_out**            | `str`       | Smart contract address of the purchase token.                                                                                                                                                 |
+| **routes**               | `array`     | An array of DEXs the transaction will be carried out through.                                                                                                                                 |
+|**protocol_name**|`str`| DEX name the transaction will be carried out through.
+|**percent**|`int`| The percent of amount will be swapped on the current DEX.
+| **calldata**             | `str`       | One of the input parameters for processing a transaction for tokens exchange.                                                                                                                 |
+| **to**                   | `str`       | Smart contract address where input parameters should be sent to.                                                                                                                              |
+
+
+
+
+
+
 #### Request Example 
-URL + `/v1/1/quote?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
+`https://api.yetanotherdefi.com/v1/1/quote?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
 #### Response Example 
 ```javascript
 {
@@ -257,8 +318,6 @@ URL + `/v1/1/quote?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&t
   "routes": [
     {
       "protocol_name": "DODO_V2",
-      "amount_in": "1500327097388245032000",
-      "amount_out": "1500000000",
       "percent": 100,
       "pools": null
     }
