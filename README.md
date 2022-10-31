@@ -248,10 +248,10 @@ Generates transaction input parameters to provide access to the user's tokens fo
 #### Response Options 
 | Name             | Data Type | Description                                                                          |
 |------------------|-----------|--------------------------------------------------------------------------------------|
-| **calldata**     | `str`     | one of the input parameters for processing a transaction providing access to tokens. |
-| **estimate_gas** | `str`     | the estimated amount of gas that will be used during the transaction.                |
-| **gas_price**    | `str`     | gas price value for a transaction in WEI.                                            |
-| **to**           | `str`     | address of the smart contract the transaction should be sent to.                     |
+| **calldata**     | `str`     | One of the input parameters for processing a transaction providing access to tokens. |
+| **estimate_gas** | `str`     | The estimated amount of gas that will be used during the transaction.                |
+| **gas_price**    | `str`     | Gas price value for a transaction in WEI.                                            |
+| **to**           | `str`     | Address of the smart contract the transaction should be sent to.                     |
 
 
 
