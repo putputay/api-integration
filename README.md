@@ -16,9 +16,9 @@
 - Full cycle of preparing a transaction for tokens exchange in the network.
 
 ## <a name="get_started"></a>Get Started
-1. URL for API – https://api.yetanotherdefi.com.
+1. URL for API – https://api.yad.finance.
 3. Without an API access key, a number of requests per second is limited, suitable for testing and development.
-4. To obtain the key, contact [partners@yetanotherdefi.com](mailto:partners@yetanotherdefi.com "partners@yetanotherdefi.com").
+4. To obtain the key, contact [partners@yad.finance](mailto:partners@yad.finance "partners@yad.finance").
 5. The given key must be added to the **header** of each request, parameter {`"X-API-Key"`: `"<key>"`}.
 
 ## <a name="flow"></a>Flow Example
@@ -57,7 +57,7 @@ None
 | **shortname** | `str`     | The short name of the blockchain network. |
 | **name**      | `str`     | The full name of the blockchain network.  |
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/platforms`
+`https://api.yad.finance/v1/platforms`
 #### Response Example
 ```javascript
 {
@@ -103,7 +103,7 @@ Provides a list of tokens for exchange on blockchains.
 | **symbol**   | `str`     | The abbreviated name of the token.                                                                                                                                            |
 
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/1/tokens`
+`https://api.yad.finance/v1/1/tokens`
 #### Response Example 
 ```javascript
 {
@@ -151,7 +151,7 @@ Provides calculated gas price values in GWEI (nAVAX for Avalanche).
 
 
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/1/gasprices`
+`https://api.yad.finance/v1/1/gasprices`
 #### Response Example 
 ```javascript
 {
@@ -189,7 +189,7 @@ Returns best exchange offer, no calldata for transaction.
 |**percent**|`int`| The percent of amount will be swapped on the current DEX.
 
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/1/price?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
+`https://api.yad.finance/v1/1/price?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
 #### Response Example 
 ```javascript
 {
@@ -224,7 +224,7 @@ Checks how many user’s tokens the exchange smart contract has access to.
 |---------------|-----------|---------------------------------------------------------------------------------|
 | **remaining** | `str`     | The number of tokens in decimals of the token the smart contract has access to. |
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/1/transaction/allowance?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&walletAddress=0x58f58219e2d2598588c1b457bb6da65c34d99310`
+`https://api.yad.finance/v1/1/transaction/allowance?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&walletAddress=0x58f58219e2d2598588c1b457bb6da65c34d99310`
 #### Response Example 
 ```javascript
 {
@@ -256,7 +256,7 @@ Generates transaction input parameters to provide access to the user's tokens fo
 
 
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/1/transaction/approve?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&amount=100000000000&gasPrice=100000000000`
+`https://api.yad.finance/v1/1/transaction/approve?tokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&amount=100000000000&gasPrice=100000000000`
 #### Response Example 
 ```javascript
 {
@@ -305,7 +305,7 @@ Returns the best exchange offer and input parameters for the transaction.
 
 
 #### Request Example 
-`https://api.yetanotherdefi.com/v1/1/quote?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
+`https://api.yad.finance/v1/1/quote?fromTokenAddress=0xdac17f958d2ee523a2206206994597c13d831ec7&toTokenAddress=0x6b175474e89094c44da98b954eedeac495271d0f&amount=1500000000&slippage=1&gasPrice=16000000000&feeRecipient=0xdac17f958d2ee523a2206206994597c13d831ec7&buyTokenPercentageFee=1`
 #### Response Example 
 ```javascript
 {
