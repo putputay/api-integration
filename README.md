@@ -275,7 +275,8 @@ Returns the best exchange offer and input parameters for the transaction.
 |---------------------------|:--------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **chainID**               | +        | ID of the blockchain tokens must be exchanged on (supported networks - `v1/platforms`).                                                                                           |
 | **fromTokenAddress**      | +        | Smart contract address of the sale token.                                                                                                                                         |
-| **toTokenAddress**        | +        | Smart contract address of the purchase token.                                                                                                                                     |
+| **toTokenAddress**        | +        | Smart contract address of the purchase token.  
+| **takerAddress**          | -        | The address which will fill the quote. When provided the gas will be estimated and returned.
 | **amount**                | +        | The amount of sale tokens in decimals of the token (can be taken from the method `/tokens`).                                                                                      |
 | **slippage**              | +        | The amount of slippage allowed during the actual execution of the transaction (10 = 1% slippage). If the price changes by more than this percentage, the transaction will revert. Min = 1 (0.1%), max = 500 (50%).|
 | **gasPrice**              | -        | Gas price value for making a transaction in WEI (nAVAX for Avalanche) (1 GWEI = 1000000000 WEI), default value is the value high from `/gasprices`.                               |
