@@ -39,8 +39,9 @@ API Use Case
 14. WALLET — the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain.
 15. GUI — after successful confirmation of the transaction from pt 14, the user is offered a button to exchange the selected tokens.
 16. API — by endpoint `GET /v1/{chainID}/quote` (`GET /v1/1/quote`) provides the number of the tokens purchased (0.05 WBTC), transaction input parameters.
-17. GUI — generates an unsigned transaction based on the data from pt 16 and sends it to the user's connected wallet. 
-18. WALLET — the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain. 
+17. API (optional) - endpoint `GET /v1/{chainID}/quote` (`GET /v1/1/quote`) also provides estimated gas amount. In case GUI does not send the optional parameter **'takerAddress'**, the estimated gas amount may be quite inaccurate.
+18. GUI — generates an unsigned transaction based on the data from pt 16 and sends it to the user's connected wallet. 
+19. WALLET — the user confirms the operation in the wallet, and the wallet then signs the transaction and sends it to the blockchain. 
 
 ## <a name="endpoint"></a>Endpoint Description
 
